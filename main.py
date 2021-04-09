@@ -7,14 +7,22 @@ RED, BLACK, GREEN, LIGHT_YELLOW = config.RED, config.BLACK, config.GREEN, config
 clock = pygame.time.Clock()
 display = pygame.display.set_mode((WIDTH, HEIGHT))
 
+# движение
+RIGHT = "r"  # r - right
+LEFT = "l"  # l - left
+UP = "u"  # u - up
+DOWN = "d"  # d - down
+STOP = "s"  # s - stop
+motion = STOP
+# /движение
+
 
 # Цикл игры
 def game_loop():
+    global motion
     running = True
-    x = 0
-    y = 0
-    coordX = 300
-    coordY = 300
+    userX = 300
+    userY = 300
     while running:
         clock.tick(FPS)  # держим цикл на правильной скорости
 
@@ -24,28 +32,30 @@ def game_loop():
                 quit()  # выйти
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    coordX -= 10
+                    motion = LEFT
                 elif event.key == pygame.K_RIGHT:
-                    coordX += 10
+                    motion = RIGHT
                 elif event.key == pygame.K_UP:
-                    coordY += 10
+                    motion = UP
                 elif event.key == pygame.K_DOWN:
-                    coordY -= 10
-        display.fill(LIGHT_YELLOW)
+                    motion = DOWN
+            else:
+                motion = STOP
 
-        pygame.draw.rect(display, RED, (x, 50, 100, 100))
-        pygame.draw.rect(display, BLACK, (50, y, 150, 150))
-        pygame.draw.circle(display, RED, (coordX, coordY), 70)
-        pygame.draw.ellipse(display, GREEN, (300, 50, 280, 100))
+        if motion == LEFT:
+            userX -= 3
+        elif motion == RIGHT:
+            userX += 3
+        elif motion == UP:
+            userY -= 3
+        elif motion == DOWN:
+            userY += 3
+        else:
+            pass
+
+        display.fill(LIGHT_YELLOW)
+        pygame.draw.circle(display, RED, (userX, userY), 70)
         pygame.display.update()
-        if x <= WIDTH:
-            x += 10
-        else:
-            x = -100
-        if y <= HEIGHT:
-            y += 30
-        else:
-            y = -100
 
 
 game_loop()
