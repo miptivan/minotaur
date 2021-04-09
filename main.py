@@ -12,6 +12,7 @@ display = pygame.display.set_mode((WIDTH, HEIGHT))
 def game_loop():
     running = True
     x = 0
+    y = 0
     coordX = 300
     coordY = 300
     while running:
@@ -32,8 +33,8 @@ def game_loop():
                     coordY -= 10
         display.fill(LIGHT_YELLOW)
 
-        pygame.draw.rect(display, RED, (x, 20, 100, 100))
-        pygame.draw.rect(display, BLACK, (50, 50, 150, 150))
+        pygame.draw.rect(display, RED, (x, 50, 100, 100))
+        pygame.draw.rect(display, BLACK, (50, y, 150, 150))
         pygame.draw.circle(display, RED, (coordX, coordY), 70)
         pygame.draw.ellipse(display, GREEN, (300, 50, 280, 100))
         pygame.display.update()
@@ -41,6 +42,10 @@ def game_loop():
             x += 10
         else:
             x = -100
+        if y <= HEIGHT:
+            y += 30
+        else:
+            y = -100
 
 
 game_loop()
