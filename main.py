@@ -2,6 +2,7 @@ import pygame
 import random
 import config
 import player
+import sys
 
 # config
 WIDTH, HEIGHT, FPS = config.WIDTH, config.HEIGHT, config.FPS
@@ -52,6 +53,7 @@ def game_loop():
         else:
             pass'''
 
+        # клавиатура
         # перейти на векторы
         keys = pygame.key.get_pressed()  # снимает "маску" зажатых клавиш. 1 - зажата, 0 - нет
         if keys[pygame.K_LEFT] and keys[pygame.K_UP]:
@@ -76,6 +78,14 @@ def game_loop():
             userY += speed
         else:
             pass
+        # / клавиатура
+
+        # мышь
+        pressed = pygame.mouse.get_pressed(num_buttons=3)  # (False, False, False)
+        pos = pygame.mouse.get_pos()
+        if pressed[0]:
+            print(pos)
+        # / мышь
 
         display.fill(LIGHT_YELLOW)
         pygame.draw.circle(display, RED, (userX, userY), 70)
