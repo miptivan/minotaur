@@ -9,16 +9,29 @@ import os
 class Player(pygame.sprite.Sprite):
     def __init__(self, player_img):
         pygame.sprite.Sprite.__init__(self)
-        # self.image = pygame.Surface((50, 100))
+        # self.image = pygame.Surface((200, 200))
         self.image = player_img
         # self.image.fill((123, 12, 123))
         self.rect = self.image.get_rect()  # оценивает изображение и высчитывает прямоугольник, способный окружить его
         self.rect.center = (config.WIDTH/2, config.HEIGHT/2)
 
     def update(self):
-        self.rect.x += 5
+        '''self.rect.x += 2
         if self.rect.left > config.WIDTH:
-            self.rect.right = 0
+            self.rect.right = 0'''
+        pass
+
+    def toLeft(self, speed):
+        self.rect.x -= speed
+
+    def toRight(self, speed):
+        self.rect.x += speed
+
+    def toUp(self, speed):
+        self.rect.y -= speed
+
+    def toDown(self, speed):
+        self.rect.y += speed
 
 
 # config
@@ -64,25 +77,25 @@ def game_loop():
         # перейти на векторы!!!
         keys = pygame.key.get_pressed()  # снимает "маску" зажатых клавиш. 1 - зажата, 0 - нет
         if keys[pygame.K_LEFT] and keys[pygame.K_UP]:
-            user_x -= speed
-            user_y -= speed
+            player.toLeft(speed)
+            player.toUp(speed)
         elif keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
-            user_x -= speed
-            user_y += speed
+            player.toLeft(speed)
+            player.toDown(speed)
         elif keys[pygame.K_RIGHT] and keys[pygame.K_UP]:
-            user_x += speed
-            user_y -= speed
+            player.toRight(speed)
+            player.toUp(speed)
         elif keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
-            user_x += speed
-            user_y += speed
+            player.toRight(speed)
+            player.toDown(speed)
         elif keys[pygame.K_LEFT]:
-            user_x -= speed
+            player.toLeft(speed)
         elif keys[pygame.K_RIGHT]:
-            user_x += speed
+            player.toRight(speed)
         elif keys[pygame.K_UP]:
-            user_y -= speed
+            player.toUp(speed)
         elif keys[pygame.K_DOWN]:
-            user_y += speed
+            player.toDown(speed)
         else:
             pass
         # / клавиатура
@@ -97,7 +110,6 @@ def game_loop():
         display.fill(LIGHT_YELLOW)
         all_sprites.update()
         all_sprites.draw(display)
-        pygame.draw.circle(display, RED, (user_x, user_y), 70)
         pygame.display.update()
 
 
