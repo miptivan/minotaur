@@ -34,6 +34,40 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += speed
 
 
+class RectPlayer():
+    def __init__(self, x, y, width, height, color):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.color = color
+        self.rect = (x, y, width, height)
+        self.vel = 3
+
+    def draw(self, win):
+        pygame.draw.rect(win, self.color, self.rect)
+
+    def move(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.x -= self.vel
+        if keys[pygame.K_RIGHT]:
+            self.x += self.vel
+        if keys[pygame.K_UP]:
+            self.y -= self.vel
+        if keys[pygame.K_DOWN]:
+            self.y += self.vel
+        self.rect = (self.x, self.y, self.width, self.height)
+
+
+def redrawWindow(display, player):
+    display.fill(LIGHT_YELLOW)
+    player.draw(display)
+    all_sprites.update()
+    all_sprites.draw(display)
+    pygame.display.update()
+
+
 # config
 WIDTH, HEIGHT, FPS = config.WIDTH, config.HEIGHT, config.FPS
 RED, BLACK, GREEN, LIGHT_YELLOW = config.RED, config.BLACK, config.GREEN, config.LIGHT_YELLOW
@@ -58,6 +92,8 @@ player_img = pygame.image.load(os.path.join(assets_folder, 'minotaur-S-stand.png
 player = Player(player_img)
 all_sprites.add(player)
 # / bull-sprite
+
+rect_player = RectPlayer(100, 100, 100, 100, RED)
 
 
 # Цикл игры
@@ -107,10 +143,8 @@ def game_loop():
             print(pos)
         # / мышь
 
-        display.fill(LIGHT_YELLOW)
-        all_sprites.update()
-        all_sprites.draw(display)
-        pygame.display.update()
+        rect_player.move()
+        redrawWindow(display, rect_player)
 
 
 game_loop()
