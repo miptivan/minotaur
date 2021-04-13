@@ -2,10 +2,14 @@ import socket
 from _thread import *
 import sys
 
+
+
 server = "IPV4 ADDRESS HERE"
 port = 5555
 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
 
 try:
     s.bind((server, port))
