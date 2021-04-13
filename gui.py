@@ -54,7 +54,14 @@ def main_menu():
 
     manager = pygame_gui.UIManager((800, 600))
 
-    new_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 190), (100, 50)),
+    nickname_textBox = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((390, 190), (100, 50)),
+                                                    manager=manager)
+  
+    nick_label = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((310, 180), (85, 50)),
+                                            text='Nickname: ',
+                                            manager=manager)               
+
+    new_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 250), (100, 50)),
                                                 text='New game',
                                                 manager=manager)
     

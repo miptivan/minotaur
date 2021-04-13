@@ -3,20 +3,23 @@ from _thread import *
 import sys
 
 
-
-server = "IPV4 ADDRESS HERE"
+hostname = socket.gethostname()
+server = socket.gethostbyname(hostname)
 port = 5555
 
+def get_ip():
+    global server
+    global port
+    return (server, port)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
-
 try:
     s.bind((server, port))
 except socket.error as e:
     str(e)
 
-s.listen(2)
+s.listen()
 print("Waiting for a connection, Server Started")
 
 
