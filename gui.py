@@ -133,6 +133,7 @@ def new_game_menu():
             if event.type == pygame.USEREVENT:
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == start_game_button:
+                        server.STATE_GAME = 1
                         print('The game is coming!!!')
                         # is_running = False
                         return 'go'

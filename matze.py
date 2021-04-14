@@ -1,6 +1,7 @@
 import numpy as np
 from random import shuffle
 
+
 class stack :
     def __init__(self, items=[]):
         self.items = items
@@ -13,6 +14,7 @@ class stack :
 
     def is_empty(self):
         return (self.items == [])
+
 
 def find_id(e, sets):
     for i in np.arange(len(sets)):
