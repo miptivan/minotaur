@@ -59,10 +59,10 @@ def create_server(server, port):
     print("Waiting for a connection, Server Started")
     
     start_new_thread(cycle, (s,))
-    s.close()
+    #s.close()
 
 def connection(Server, Port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(Server, Port)
+    s.connect((Server, Port))
     s.send(b'hello)')
-    s.close()
+    #s.close()
