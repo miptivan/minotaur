@@ -103,27 +103,21 @@ def main_menu():
 
 def new_game_menu():
     pygame.init()
-    pygame.display.set_caption('Waiting room')
+    pygame.display.set_caption('Server waiting room')
     window_surface = pygame.display.set_mode((800, 600))
-
     background = pygame.Surface((800, 600))
     background.fill(pygame.Color('#000000'))
-
     manager = pygame_gui.UIManager((800, 600))
-
     schetchik_box = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((350, 190), (100, 50)),
                                             text='1 user',
                                             manager=manager)
-
     ip_port_box = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((320, 250), (160, 50)),
                                             manager=manager)
-    
     ip_port_box.text = server.get_ip()
-
     start_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 310), (100, 50)),
                                                 text='Start game',
                                                 manager=manager)
-
+    server.create_server(server.server, server.port)
     clock = pygame.time.Clock()
     is_running = True
 

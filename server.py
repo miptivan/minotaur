@@ -7,10 +7,12 @@ hostname = socket.gethostname()
 server = socket.gethostbyname(hostname)
 port = 5555
 
+
 def get_ip():
     global server
     global port
     return f'{server}:{port}'
+
 
 def threaded_client(conn):
     conn.send(str.encode("Connected"))
@@ -35,6 +37,14 @@ def threaded_client(conn):
     conn.close()
 
 
+def cycle(s):
+    while True:
+        conn, addr = s.accept()
+        print("Connected to:", addr)
+
+        start_new_thread(threaded_client, (conn,))
+
+
 def create_server(server, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
@@ -46,8 +56,4 @@ def create_server(server, port):
     s.listen()
     print("Waiting for a connection, Server Started")
     
-    while True:
-        conn, addr = s.accept()
-        print("Connected to:", addr)
-
-        start_new_thread(threaded_client, (conn,))
+    start_new_thread(cycle, (s,))
