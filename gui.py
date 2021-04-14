@@ -2,6 +2,13 @@ import pygame
 import pygame_gui
 
 
+def draw_text(text, font, color, surface, x, y):
+    textobj = font.render(text, 1, color)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
+
+
 def find_game_menu():
     pygame.init()
     pygame.display.set_caption('Quick Start')
@@ -48,27 +55,21 @@ def main_menu():
     pygame.init()
     pygame.display.set_caption('Quick Start')
     window_surface = pygame.display.set_mode((800, 600))
-
     background = pygame.Surface((800, 600))
     background.fill(pygame.Color('#000000'))
 
     manager = pygame_gui.UIManager((800, 600))
-
+    nick_label = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((310, 180), (85, 50)),
+                                             text='Nickname: ',
+                                             manager=manager)
     nickname_textBox = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((390, 190), (100, 50)),
                                                     manager=manager)
-  
-    nick_label = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((310, 180), (85, 50)),
-                                            text='Nickname: ',
-                                            manager=manager)               
-
     new_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 250), (100, 50)),
                                                 text='New game',
                                                 manager=manager)
-    
     find_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 310), (100, 50)),
                                                     text='Find game',
                                                     manager=manager)
-
     clock = pygame.time.Clock()
     is_running = True
 
@@ -97,6 +98,7 @@ def main_menu():
 
         pygame.display.update()
 
+
 def new_game_menu():
     pygame.init()
     pygame.display.set_caption('Quick Start')
@@ -108,7 +110,7 @@ def new_game_menu():
     manager = pygame_gui.UIManager((800, 600))
 
     schetchik = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((350, 190), (100, 50)),
-                                            text='kuku',
+                                            text='1 user',
                                             manager=manager)
 
     start_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 310), (100, 50)),
@@ -130,12 +132,13 @@ def new_game_menu():
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == start_game_button:
                         print('The game is coming!!!')
-                        #is_running = False
+                        # is_running = False
                         return 'go'
 
         manager.update(time_delta)
 
         window_surface.blit(background, (0, 0))
         manager.draw_ui(window_surface)
+        draw_text('main menu', pygame.font.SysFont(None, 20), (255, 0, 0), window_surface, 20, 20)
 
         pygame.display.update()
