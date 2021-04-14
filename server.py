@@ -41,6 +41,8 @@ def cycle(s):
     while True:
         conn, addr = s.accept()
         print("Connected to:", addr)
+        res = conn.recv(1024)
+        print(res)
 
         start_new_thread(threaded_client, (conn,))
 
@@ -57,3 +59,10 @@ def create_server(server, port):
     print("Waiting for a connection, Server Started")
     
     start_new_thread(cycle, (s,))
+    s.close()
+
+def connection(Server, Port):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(Server, Port)
+    s.send(b'hello)')
+    s.close()
