@@ -16,13 +16,11 @@ def get_ip():
 
 
 def threaded_client(conn):
-    conn.send(str.encode("Connected"))
-    reply = ""
     while True:
         if STATE_GAME == 1:
             labirint = matze(25, 25)
             labirint.dfs()
-            conn.send(bytes(str(labirint.space)))
+            conn.send(bytes(str(labirint.space).encoding('utf8')))
 
 
 def cycle(s):
@@ -44,9 +42,13 @@ def create_server(server, port):
     # s.close()
 
 
-def connection(Server, Port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((Server, Port))
+def cycle_client(s):
     while True:
         labirint = s.recv(50*50*8*3)
         print(labirint)
+
+
+def connection(Server, Port):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((Server, Port))
+    start_new_thread(cycle_client, (s,))
