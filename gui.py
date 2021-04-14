@@ -42,7 +42,7 @@ def find_game_menu():
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == hello_button:
                         ip, port = text_element.text.split(':')
-                        connection(ip, int(port))
+                        server.connection(ip, int(port))
                         waiting_room()
                         is_running = False
 
