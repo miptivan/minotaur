@@ -2,6 +2,7 @@ import socket
 from _thread import *
 from matze import matze
 
+labirint = None
 
 hostname = socket.gethostname()
 server = socket.gethostbyname(hostname)
@@ -16,11 +17,15 @@ def get_ip():
 
 
 def threaded_client(conn):
-    while True:
+    global labirint
+    while True:  # ждём начала игры
         if STATE_GAME == 1:
             labirint = matze(25, 25)
             labirint.dfs()
-            conn.send(bytes(str(labirint.space).encoding('utf8')))
+            labirint = labirint.space
+            conn.send(str.encode(str(labirint)))
+            while True:
+                pass  # цикл игры
 
 
 def cycle(s):
@@ -43,9 +48,22 @@ def create_server(server, port):
 
 
 def cycle_client(s):
-    while True:
-        labirint = s.recv(50*50*8*3)
-        print(labirint)
+    global labirint
+    labirint = s.recv(50*50*8*3)
+    print(labirint)
+    labirint = str.decode(labirint)
+    labirint = labirint[1:-1]
+    res = []
+    i = 0
+    for s in labirint.split('\n'):
+        res.append([])
+        s = s[1:-1]
+        for m in s.split(' '):
+            res[i].append(float(m))
+        i += 1
+    labirint = np.array(res)
+    while True:  # Цикл игры
+        pass
 
 
 def connection(Server, Port):
