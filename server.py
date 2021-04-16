@@ -56,9 +56,12 @@ def server():
 def answer_cycle(s):
     global clients_state
     global STATE_GAME
+    print(STATE_GAME)
     while STATE_GAME == 0:
+        print('we are waiting...')
         conn, addr = s.accept()
-        conn.send('connected')
+        print('oy')
+        #conn.send('connected')
         print("Connected to:", addr)
         start_new_thread(threaded_client, (conn,))
     # change State_game
