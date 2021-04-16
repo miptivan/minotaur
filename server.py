@@ -7,7 +7,7 @@ labirint = None
 hostname = socket.gethostname()
 Server = socket.gethostbyname(hostname)
 Port = 5555
-STATE_GAME = 0  # 0 - Ожидание, 1 - Игра началась
+STATE_GAME = 0  # 0 - Ожидание, 1 - готовность к игре
 
 
 def state_machine():
@@ -63,6 +63,11 @@ def answer_cycle(s):
         start_new_thread(threaded_client, (conn,))
     # change State_game
     
+    while not clients_state.check_states(1):
+        pass
+
+    STATE_GAME = 1
+
     while not clients_state.check_states(2):
         pass
 
