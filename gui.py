@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 import server
-
+import client
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -42,7 +42,7 @@ def find_game_menu():
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == hello_button:
                         ip, port = text_element.text.split(':')
-                        server.connection(ip, int(port))
+                        client.client(ip, int(port))
                         waiting_room()
                         is_running = False
 
@@ -118,7 +118,8 @@ def new_game_menu():
     start_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 310), (100, 50)),
                                                 text='Start game',
                                                 manager=manager)
-    server.create_server(server.server, server.port)
+    
+    server.server()
     clock = pygame.time.Clock()
     is_running = True
 
@@ -134,8 +135,9 @@ def new_game_menu():
                 if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                     if event.ui_element == start_game_button:
                         server.STATE_GAME = 1
-                        print('The game is coming!!!')
                         # is_running = False
+                        while server.STATE_GAME != 2:
+                            pass
                         return 'go'
 
         manager.update(time_delta)
